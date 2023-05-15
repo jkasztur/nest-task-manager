@@ -1,0 +1,35 @@
+version: "3.5"
+
+services:
+  app:
+    image: node:16.14.0-alpine
+    container_name: task-manager
+    working_dir: /app
+    volumes:
+      - .:/app:delegated
+    environment: 
+      DB_HOST: task-manager-postgres
+      DB_PORT: 5432
+      DB_USER: task_manager
+      DB_PASSWORD: task_manager
+      DB_DATABASE: task_manager
+    ports:
+      - "3001:80"
+    depends_on:
+      - postgres
+    command: npm run start
+    restart: on-failure
+
+  postgres:
+    image: postgres:12.7-alpine
+    container_name: task-manager-postgres
+    environment:
+      POSTGRES_USER: task_manager
+      POSTGRES_PASSWORD: task_manager
+      POSTGRES_DB: task_manager
+    ports:
+      - "3002:5432"
+
+networks:
+  default:
+    name: develop
