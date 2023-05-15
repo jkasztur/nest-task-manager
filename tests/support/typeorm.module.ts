@@ -1,5 +1,5 @@
 import { TypeOrmModule } from "@nestjs/typeorm"
-import { Project } from "@src/project/project.entity"
+import { Project } from "../../src/project/project.entity"
 
 export const TypeOrmTestingModule = TypeOrmModule.forRoot({
 	type: 'postgres',

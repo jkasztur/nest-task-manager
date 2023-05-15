@@ -51,4 +51,13 @@ describe('create', () => {
 			.expect(400)
 	})
 
+	test('should throw when too long name', async () => {
+		return request(app.getHttpServer())
+			.post('/project')
+			.send({
+				description: 'Some text',
+				name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbb'
+			}).expect(400)
+	})
+
 })

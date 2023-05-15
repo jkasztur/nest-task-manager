@@ -12,12 +12,10 @@ import { ProjectModule } from './project/project.module';
 			database: process.env.POSTGRES_DATABASE,
 			username: process.env.POSTGRES_USERNAME,
 			password: process.env.POSTGRES_PASSWORD,
-			entities: [
-				Project
-			],
+			entities: [Project],
 			synchronize: true,
 		}),
-		ProjectModule
+		ProjectModule,
 	],
 })
 export class AppModule {}

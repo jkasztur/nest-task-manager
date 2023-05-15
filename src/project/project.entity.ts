@@ -1,27 +1,32 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Project {
-
 	@PrimaryGeneratedColumn('increment')
-	id: number
+	@ApiProperty()
+	id: number;
 
 	@Column({
 		length: 64,
-		unique: true
+		unique: true,
 	})
-	name: string
+	@ApiProperty()
+	name: string;
 
 	@Column({
-		length: 512
+		length: 512,
 	})
-	description: string
+	@ApiProperty()
+	description: string;
 
 	@Column({
-		update: false
+		update: false,
 	})
-	createdAt: Date
+	@ApiProperty()
+	createdAt: Date;
 
 	@Column()
-	updatedAt: Date
+	@ApiProperty()
+	updatedAt: Date;
 }
