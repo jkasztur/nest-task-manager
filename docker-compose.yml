@@ -8,21 +8,22 @@ services:
     volumes:
       - .:/app:delegated
     environment: 
-      DB_HOST: task-manager-postgres
-      DB_PORT: 5432
-      DB_USER: task_manager
-      DB_PASSWORD: task_manager
-      DB_DATABASE: task_manager
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USERNAME: task_manager
+      POSTGRES_PASSWORD: task_manager
+      POSTGRES_DATABASE: task_manager
     ports:
       - "3001:80"
-    depends_on:
-      - postgres
-    command: npm run start
+    entrypoint: [ "/app/docker/entrypoint" ]
+    command: npm run start:dev
     restart: on-failure
 
   postgres:
     image: postgres:12.7-alpine
     container_name: task-manager-postgres
+    volumes:
+      - ./docker/postgres-init.sh:/docker-entrypoint-initdb.d/init-user-db.sh
     environment:
       POSTGRES_USER: task_manager
       POSTGRES_PASSWORD: task_manager
@@ -32,4 +33,5 @@ services:
 
 networks:
   default:
-    name: develop
+    name: task_manager
+

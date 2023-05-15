@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+set -e
+
+if [ -n "$WAIT_HOSTS" ]; then
+	if [ "$(uname -m)" = 'arm64' ] || [ "$(uname -m)" = 'aarch64' ]; then
+		/app/docker/wait-arm64
+	else
+		/app/docker/wait
+	fi
+fi
+
+exec "$@"
