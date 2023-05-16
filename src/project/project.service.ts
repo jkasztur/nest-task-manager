@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { Project } from './project.entity';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common'
+import { Repository } from 'typeorm'
+import { Project } from './project.entity'
+import { InjectRepository } from '@nestjs/typeorm'
+import { ProjectCreateParams } from './project.types'
 
 @Injectable()
 export class ProjectService {
@@ -11,25 +12,39 @@ export class ProjectService {
 	) {}
 
 	async get(id: number): Promise<Project> {
-		return this.projectRepository.findOneBy({ id });
+		return this.projectRepository.findOneBy({ id })
 	}
 
-	async create(data: Partial<Project>) {
-		const createdAt = new Date();
+	async create(data: ProjectCreateParams) {
+		const createdAt = new Date()
 		return await this.projectRepository.save({
 			...data,
 			createdAt,
 			updatedAt: createdAt,
-		});
+		})
 	}
 
 	async delete(id: number) {
-		const entity = await this.get(id);
+		const entity = await this.get(id)
 		if (entity) {
-			await this.projectRepository.remove(entity);
-			return true;
+			await this.projectRepository.remove(entity)
+			return true
 		} else {
-			return false;
+			return false
 		}
+	}
+
+	async update(id: number, data: ProjectCreateParams): Promise<Project> {
+		const updateResult = await this.projectRepository.update(
+			{ id },
+			{
+				...data,
+				updatedAt: new Date(),
+			},
+		)
+		if (updateResult.affected === 0) {
+			return null
+		}
+		return updateResult.raw
 	}
 }

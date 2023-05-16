@@ -1,12 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { MaxLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { MaxLength } from 'class-validator'
 
 export class ProjectCreateParams {
 	@MaxLength(64)
 	@ApiProperty()
-	name: string;
+	name: string
 
 	@MaxLength(512)
 	@ApiProperty()
-	description: string;
+	description: string
 }
