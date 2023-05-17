@@ -13,8 +13,11 @@ export class TaskService {
 		private tagService: TagService,
 	) {}
 
-	async get(id: number): Promise<Task> {
-		return this.repository.findOneBy({ id })
+	async get(id: number, withRelations = false): Promise<Task> {
+		return this.repository.findOne({
+			where: { id },
+			relations: withRelations ? ['tags'] : [],
+		})
 	}
 
 	async create(data: TaskCreateParams) {
@@ -56,7 +59,7 @@ export class TaskService {
 	}
 
 	async addTag(id: number, tagId: number): Promise<AddTagResult> {
-		const task = await this.get(id)
+		const task = await this.get(id, true)
 		if (task.tags?.find((tag) => tag.id === tagId)) {
 			// already assigned
 			return { status: 'unchanged', task }

@@ -6,15 +6,15 @@ import {
 	HttpCode,
 	ParseIntPipe,
 	Post,
-	Query,
 	Patch,
 	UsePipes,
 	ValidationPipe,
 	HttpException,
+	Param,
 } from '@nestjs/common'
 import { ProjectCreateParams, ProjectUpdateParams } from './project.types'
 import { ProjectService } from './project.service'
-import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Project } from './project.entity'
 
 @Controller({ path: '/project' })
@@ -32,19 +32,19 @@ export class ProjectController {
 	}
 
 	@Delete('/:id')
-	@ApiQuery({ name: 'id', type: 'number' })
+	@ApiParam({ name: 'id', type: 'number' })
 	@ApiResponse({ status: 200 })
 	@HttpCode(200)
-	async delete(@Query('id', new ParseIntPipe()) id: number) {
+	async delete(@Param('id', new ParseIntPipe()) id: number) {
 		const deleted = await this.service.delete(id)
 		return { deleted }
 	}
 
 	@Get('/:id')
-	@ApiQuery({ name: 'id', type: 'number' })
+	@ApiParam({ name: 'id', type: 'number' })
 	@ApiResponse({ status: 200, type: Project })
 	@HttpCode(200)
-	async get(@Query('id', new ParseIntPipe()) id: number) {
+	async get(@Param('id', new ParseIntPipe()) id: number) {
 		const project = await this.service.get(id)
 		if (!project) {
 			throw new HttpException('Project not found', 404)
@@ -53,12 +53,12 @@ export class ProjectController {
 	}
 
 	@Patch('/:id')
-	@ApiQuery({ name: 'id', type: 'number' })
+	@ApiParam({ name: 'id', type: 'number' })
 	@ApiBody({ type: ProjectUpdateParams })
 	@ApiResponse({ status: 200, type: Project })
 	@HttpCode(200)
 	async update(
-		@Query('id', new ParseIntPipe()) id: number,
+		@Param('id', new ParseIntPipe()) id: number,
 		@Body() body: ProjectUpdateParams,
 	) {
 		const updated = await this.service.update(id, body)

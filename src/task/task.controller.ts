@@ -6,7 +6,7 @@ import {
 	HttpCode,
 	ParseIntPipe,
 	Post,
-	Query,
+	Param,
 	Patch,
 	UsePipes,
 	ValidationPipe,
@@ -15,7 +15,7 @@ import {
 } from '@nestjs/common'
 import { TaskCreateParams, TaskUpdateParams } from './task.types'
 import { TaskService } from './task.service'
-import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Task } from './task.entity'
 import { Response } from 'express'
 
@@ -34,19 +34,19 @@ export class TaskController {
 	}
 
 	@Delete('/:id')
-	@ApiQuery({ name: 'id', type: 'number' })
+	@ApiParam({ name: 'id', type: 'number' })
 	@ApiResponse({ status: 200 })
 	@HttpCode(200)
-	async delete(@Query('id', new ParseIntPipe()) id: number) {
+	async delete(@Param('id', new ParseIntPipe()) id: number) {
 		const deleted = await this.service.delete(id)
 		return { deleted }
 	}
 
 	@Get('/:id')
-	@ApiQuery({ name: 'id', type: 'number' })
+	@ApiParam({ name: 'id', type: 'number' })
 	@ApiResponse({ status: 200, type: Task })
 	@HttpCode(200)
-	async get(@Query('id', new ParseIntPipe()) id: number) {
+	async get(@Param('id', new ParseIntPipe()) id: number) {
 		const project = await this.service.get(id)
 		if (!project) {
 			throw new HttpException('Task not found', 404)
@@ -55,12 +55,12 @@ export class TaskController {
 	}
 
 	@Patch('/:id')
-	@ApiQuery({ name: 'id', type: 'number' })
+	@ApiParam({ name: 'id', type: 'number' })
 	@ApiBody({ type: TaskUpdateParams })
 	@ApiResponse({ status: 200, type: Task })
 	@HttpCode(200)
 	async update(
-		@Query('id', new ParseIntPipe()) id: number,
+		@Param('id', new ParseIntPipe()) id: number,
 		@Body() body: TaskUpdateParams,
 	) {
 		const updated = await this.service.update(id, body)
@@ -71,14 +71,14 @@ export class TaskController {
 	}
 
 	@Patch('/:id/tag/:tagId')
-	@ApiQuery({ name: 'id', type: 'number' })
-	@ApiQuery({ name: 'tagId', type: 'number' })
+	@ApiParam({ name: 'id', type: 'number' })
+	@ApiParam({ name: 'tagId', type: 'number' })
 	@ApiResponse({ status: 200, type: Task })
 	@HttpCode(200)
 	@HttpCode(204)
 	async addTag(
-		@Query('id', new ParseIntPipe()) id: number,
-		@Query('tagId', new ParseIntPipe()) tagId: number,
+		@Param('id', new ParseIntPipe()) id: number,
+		@Param('tagId', new ParseIntPipe()) tagId: number,
 		@Res() response: Response,
 	) {
 		const result = await this.service.addTag(id, tagId)
