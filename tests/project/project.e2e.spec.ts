@@ -1,23 +1,17 @@
 import { INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
-import { getRepositoryToken } from '@nestjs/typeorm'
-import * as request from 'supertest';
-import { Project } from '@src/project/project.entity'
+import * as request from 'supertest'
 import { ProjectModule } from '@src/project/project.module'
 import { TypeOrmTestingModule } from '@support/typeorm.module'
-import { Repository } from 'typeorm'
-import { flushDb } from '@support/helpers';
+import { flushDb } from '@support/helpers'
 
 let testModule: TestingModule
-let repo: Repository<Project>
 let app: INestApplication
 
 beforeAll(async () => {
 	testModule = await Test.createTestingModule({
-		imports: [TypeOrmTestingModule, ProjectModule]
+		imports: [TypeOrmTestingModule, ProjectModule],
 	}).compile()
-	const token = getRepositoryToken(Project)
-	repo = testModule.get(token)
 	app = testModule.createNestApplication()
 	await app.init()
 })
@@ -57,7 +51,8 @@ describe('create', () => {
 			.post('/project')
 			.send({
 				description: 'Some text',
-				name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbb'
-			}).expect(400)
+				name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbb',
+			})
+			.expect(400)
 	})
 })

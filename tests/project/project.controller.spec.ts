@@ -1,22 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { getRepositoryToken, getConnectionToken } from '@nestjs/typeorm'
 import { ProjectController } from '@src/project/project.controller'
-import { Project } from '@src/project/project.entity'
 import { ProjectModule } from '@src/project/project.module'
 import { flushDb } from '@support/helpers'
 import { TypeOrmTestingModule } from '@support/typeorm.module'
-import { Repository } from 'typeorm'
 
 let testModule: TestingModule
-let repo: Repository<Project>
 let controller: ProjectController
 
 beforeAll(async () => {
 	testModule = await Test.createTestingModule({
-		imports: [TypeOrmTestingModule, ProjectModule]
+		imports: [TypeOrmTestingModule, ProjectModule],
 	}).compile()
-	const token = getRepositoryToken(Project)
-	repo = testModule.get(token)
 	controller = testModule.get(ProjectController)
 })
 
@@ -32,7 +26,7 @@ describe('create', () => {
 	test('should create with valid values', async () => {
 		const response = await controller.create({
 			name: 'Project 1',
-			description: 'Some text'
+			description: 'Some text',
 		})
 		expect(response).toMatchObject({
 			name: 'Project 1',

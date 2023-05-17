@@ -9,7 +9,7 @@ export class TaskService {
 	constructor(
 		@InjectRepository(Task)
 		private repository: Repository<Task>,
-	) { }
+	) {}
 
 	async get(id: number): Promise<Task> {
 		return this.repository.findOneBy({ id })

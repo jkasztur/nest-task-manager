@@ -19,7 +19,7 @@ import { Project } from './project.entity'
 
 @Controller({ path: '/project' })
 @UsePipes(new ValidationPipe())
-	@ApiTags('project')
+@ApiTags('project')
 export class ProjectController {
 	constructor(private service: ProjectService) {}
 

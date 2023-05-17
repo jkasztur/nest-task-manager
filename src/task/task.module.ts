@@ -5,4 +5,4 @@ import { Task } from './task.entity'
 @Module({
 	imports: [TypeOrmModule.forFeature([Task])],
 })
-export class TaskModule { }
+export class TaskModule {}

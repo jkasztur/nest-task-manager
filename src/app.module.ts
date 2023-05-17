@@ -14,14 +14,11 @@ import { Task } from './task/task.entity'
 			database: process.env.POSTGRES_DATABASE,
 			username: process.env.POSTGRES_USERNAME,
 			password: process.env.POSTGRES_PASSWORD,
-			entities: [
-				Project,
-				Task
-			],
+			entities: [Project, Task],
 			synchronize: true,
 		}),
 		ProjectModule,
-		TaskModule
+		TaskModule,
 	],
 })
 export class AppModule {}

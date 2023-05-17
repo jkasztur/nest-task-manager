@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Task } from '../task/task.entity'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm'
+import {
+	Column,
+	Entity,
+	OneToMany,
+	PrimaryGeneratedColumn,
+	Relation,
+} from 'typeorm'
 
 @Entity()
 export class Project {
@@ -31,6 +37,6 @@ export class Project {
 	@ApiProperty()
 	updatedAt: Date
 
-	@OneToMany(() => Task, task => task.project, { onDelete: 'CASCADE' })
+	@OneToMany(() => Task, (task) => task.project, { onDelete: 'CASCADE' })
 	tasks: Relation<Task[]>
 }

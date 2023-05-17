@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Project } from '../project/project.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Relation } from 'typeorm'
+import {
+	Column,
+	Entity,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	Relation,
+} from 'typeorm'
 import { TaskStatus } from './task.types'
 
 @Entity()
@@ -27,11 +33,11 @@ export class Task {
 
 	@Column({
 		type: 'enum',
-		enum: Object.values(TaskStatus)
+		enum: Object.values(TaskStatus),
 	})
 	@ApiProperty()
 	status: TaskStatus
 
-	@ManyToOne(() => Project, project => project.tasks, { onDelete: 'CASCADE' })
+	@ManyToOne(() => Project, (project) => project.tasks, { onDelete: 'CASCADE' })
 	project: Relation<Project>
 }

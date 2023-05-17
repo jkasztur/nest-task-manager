@@ -1,11 +1,10 @@
-
 import { ApiProperty } from '@nestjs/swagger'
 import { MaxLength } from 'class-validator'
 
 export enum TaskStatus {
 	New = 'new',
 	InProgress = 'in_progress',
-	Completed = 'completed'
+	Completed = 'completed',
 }
 
 export class TaskCreateParams {
