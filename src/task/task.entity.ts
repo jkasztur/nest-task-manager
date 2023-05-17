@@ -3,6 +3,7 @@ import { Project } from '../project/project.entity'
 import {
 	Column,
 	Entity,
+	Index,
 	JoinTable,
 	ManyToMany,
 	ManyToOne,
@@ -46,6 +47,7 @@ export class Task {
 		onDelete: 'CASCADE',
 		nullable: false,
 	})
+	@Index()
 	project: Relation<Project>
 
 	@ManyToMany(() => Tag, (tag) => tag.tasks, { onDelete: 'CASCADE' })
