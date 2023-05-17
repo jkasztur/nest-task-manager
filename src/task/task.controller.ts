@@ -11,11 +11,13 @@ import {
 	UsePipes,
 	ValidationPipe,
 	HttpException,
+	Res,
 } from '@nestjs/common'
 import { TaskCreateParams, TaskUpdateParams } from './task.types'
 import { TaskService } from './task.service'
 import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Task } from './task.entity'
+import { Response } from 'express'
 
 @Controller({ path: '/task' })
 @UsePipes(new ValidationPipe())
@@ -66,5 +68,33 @@ export class TaskController {
 			throw new HttpException('Task not found', 404)
 		}
 		return updated
+	}
+
+	@Patch('/:id/tag/:tagId')
+	@ApiQuery({ name: 'id', type: 'number' })
+	@ApiQuery({ name: 'tagId', type: 'number' })
+	@ApiResponse({ status: 200, type: Task })
+	@HttpCode(200)
+	@HttpCode(204)
+	async addTag(
+		@Query('id', new ParseIntPipe()) id: number,
+		@Query('tagId', new ParseIntPipe()) tagId: number,
+		@Res() response: Response,
+	) {
+		const result = await this.service.addTag(id, tagId)
+		switch (result.status) {
+			case 'not_found':
+				throw new HttpException('Task or tag not found', 404)
+			case 'unchanged':
+				response.status(204)
+				response.send(result.task)
+				break
+			case 'max':
+				response.status(422)
+				response.send({ message: 'Task already has max tags' })
+				break
+			default:
+				response.send(result.task)
+		}
 	}
 }

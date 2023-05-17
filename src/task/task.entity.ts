@@ -3,6 +3,7 @@ import { Project } from '../project/project.entity'
 import {
 	Column,
 	Entity,
+	JoinTable,
 	ManyToMany,
 	ManyToOne,
 	PrimaryGeneratedColumn,
@@ -48,5 +49,6 @@ export class Task {
 	project: Relation<Project>
 
 	@ManyToMany(() => Tag, (tag) => tag.tasks, { onDelete: 'CASCADE' })
-	tags: Relation<Task[]>
+	@JoinTable({ name: 'task_tags' })
+	tags: Relation<Tag>[]
 }
