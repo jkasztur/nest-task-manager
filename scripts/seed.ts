@@ -34,9 +34,9 @@ async function seedProjects() {
 }
 
 async function seedTags() {
-	console.log('Seeding 50 tags')
+	console.log('Seeding 200 tags')
 	const ids: number[] = []
-	for (let i = 0; i < 50; i++) {
+	for (let i = 0; i < 200; i++) {
 		const response = await client.post('/tag', {
 			name: faker.word.noun(),
 		})
@@ -46,14 +46,26 @@ async function seedTags() {
 }
 
 async function seedTasks(projectIds: number[], tagIds: number[]) {
-	console.log('Seeding tasks')
 	for (const projectId of projectIds) {
+		console.log(
+			`Seeding tasks for project ${projectIds.indexOf(projectId) + 1} / ${
+				projectIds.length
+			}`,
+		)
 		const taskCount = faker.number.int({ min: 10, max: 50 })
 		for (let i = 0; i < taskCount; i++) {
 			const response = await client.post('/task', {
 				description: faker.word.noun(),
 				projectId,
 			})
+			const tagCount = faker.number.int({ min: 1, max: 100 })
+			// choose random tags
+			const tagsToApply = [...tagIds]
+				.sort(() => 0.5 - Math.random())
+				.slice(0, tagCount)
+			for (const tagId of tagsToApply) {
+				await client.patch(`/task/${response.data.id}/tag/${tagId}`)
+			}
 		}
 	}
 }
