@@ -12,13 +12,14 @@ import {
 	ValidationPipe,
 	HttpException,
 } from '@nestjs/common'
-import { ProjectCreateParams } from './project.types'
+import { ProjectCreateParams, ProjectUpdateParams } from './project.types'
 import { ProjectService } from './project.service'
-import { ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger'
+import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Project } from './project.entity'
 
 @Controller({ path: '/project' })
 @UsePipes(new ValidationPipe())
+	@ApiTags('project')
 export class ProjectController {
 	constructor(private service: ProjectService) {}
 
@@ -53,12 +54,12 @@ export class ProjectController {
 
 	@Patch('/:id')
 	@ApiQuery({ name: 'id', type: 'number' })
-	@ApiBody({ type: ProjectCreateParams })
+	@ApiBody({ type: ProjectUpdateParams })
 	@ApiResponse({ status: 200, type: Project })
 	@HttpCode(200)
 	async update(
 		@Query('id', new ParseIntPipe()) id: number,
-		@Body() body: ProjectCreateParams,
+		@Body() body: ProjectUpdateParams,
 	) {
 		const updated = await this.service.update(id, body)
 		if (!updated) {

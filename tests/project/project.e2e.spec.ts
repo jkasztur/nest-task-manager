@@ -6,6 +6,7 @@ import { Project } from '@src/project/project.entity'
 import { ProjectModule } from '@src/project/project.module'
 import { TypeOrmTestingModule } from '@support/typeorm.module'
 import { Repository } from 'typeorm'
+import { flushDb } from '@support/helpers';
 
 let testModule: TestingModule
 let repo: Repository<Project>
@@ -22,7 +23,7 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => {
-	await repo.clear()
+	await flushDb(testModule)
 })
 
 afterAll(async () => {
@@ -59,5 +60,4 @@ describe('create', () => {
 				name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbb'
 			}).expect(400)
 	})
-
 })

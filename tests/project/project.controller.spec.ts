@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { getRepositoryToken } from '@nestjs/typeorm'
+import { getRepositoryToken, getConnectionToken } from '@nestjs/typeorm'
 import { ProjectController } from '@src/project/project.controller'
 import { Project } from '@src/project/project.entity'
 import { ProjectModule } from '@src/project/project.module'
+import { flushDb } from '@support/helpers'
 import { TypeOrmTestingModule } from '@support/typeorm.module'
 import { Repository } from 'typeorm'
 
@@ -20,7 +21,7 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => {
-	await repo.clear()
+	await flushDb(testModule)
 })
 
 afterAll(async () => {
@@ -42,3 +43,5 @@ describe('create', () => {
 		})
 	})
 })
+
+// TODO: complete tests

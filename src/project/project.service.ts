@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 import { Project } from './project.entity'
 import { InjectRepository } from '@nestjs/typeorm'
-import { ProjectCreateParams } from './project.types'
+import { ProjectCreateParams, ProjectUpdateParams } from './project.types'
 
 @Injectable()
 export class ProjectService {
@@ -34,7 +34,7 @@ export class ProjectService {
 		}
 	}
 
-	async update(id: number, data: ProjectCreateParams): Promise<Project> {
+	async update(id: number, data: ProjectUpdateParams): Promise<Project> {
 		const updateResult = await this.projectRepository.update(
 			{ id },
 			{

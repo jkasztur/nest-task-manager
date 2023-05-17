@@ -10,3 +10,13 @@ export class ProjectCreateParams {
 	@ApiProperty()
 	description: string
 }
+
+export class ProjectUpdateParams {
+	@MaxLength(64)
+	@ApiProperty({ required: false })
+	name?: string
+
+	@MaxLength(512)
+	@ApiProperty({ required: false })
+	description?: string
+}

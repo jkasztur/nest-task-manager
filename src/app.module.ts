@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Project } from './project/project.entity'
 import { ProjectModule } from './project/project.module'
+import { TaskModule } from './task/task.module'
+import { Task } from './task/task.entity'
 
 @Module({
 	imports: [
@@ -12,10 +14,14 @@ import { ProjectModule } from './project/project.module'
 			database: process.env.POSTGRES_DATABASE,
 			username: process.env.POSTGRES_USERNAME,
 			password: process.env.POSTGRES_PASSWORD,
-			entities: [Project],
+			entities: [
+				Project,
+				Task
+			],
 			synchronize: true,
 		}),
 		ProjectModule,
+		TaskModule
 	],
 })
 export class AppModule {}
