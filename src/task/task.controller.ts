@@ -21,7 +21,7 @@ import { Task } from './task.entity'
 @UsePipes(new ValidationPipe())
 @ApiTags('task')
 export class TaskController {
-	constructor(private service: TaskService) { }
+	constructor(private service: TaskService) {}
 
 	@Post()
 	@ApiBody({ type: TaskCreateParams })
