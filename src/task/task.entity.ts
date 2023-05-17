@@ -3,11 +3,13 @@ import { Project } from '../project/project.entity'
 import {
 	Column,
 	Entity,
+	ManyToMany,
 	ManyToOne,
 	PrimaryGeneratedColumn,
 	Relation,
 } from 'typeorm'
 import { TaskStatus } from './task.types'
+import { Tag } from 'src/tag/tag.entity'
 
 @Entity()
 export class Task {
@@ -40,4 +42,7 @@ export class Task {
 
 	@ManyToOne(() => Project, (project) => project.tasks, { onDelete: 'CASCADE' })
 	project: Relation<Project>
+
+	@ManyToMany(() => Tag, (tag) => tag.tasks, { onDelete: 'CASCADE' })
+	tags: Relation<Task>[]
 }

@@ -4,6 +4,8 @@ import { Project } from './project/project.entity'
 import { ProjectModule } from './project/project.module'
 import { TaskModule } from './task/task.module'
 import { Task } from './task/task.entity'
+import { TagModule } from './tag/tag.module'
+import { Tag } from './tag/tag.entity'
 
 @Module({
 	imports: [
@@ -14,11 +16,12 @@ import { Task } from './task/task.entity'
 			database: process.env.POSTGRES_DATABASE,
 			username: process.env.POSTGRES_USERNAME,
 			password: process.env.POSTGRES_PASSWORD,
-			entities: [Project, Task],
+			entities: [Project, Task, Tag],
 			synchronize: true,
 		}),
 		ProjectModule,
 		TaskModule,
+		TagModule,
 	],
 })
 export class AppModule {}
