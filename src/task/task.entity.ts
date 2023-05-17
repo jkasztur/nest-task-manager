@@ -29,6 +29,7 @@ export class Task {
 
 	@Column({
 		length: 512,
+		nullable: false,
 	})
 	@ApiProperty()
 	description: string
@@ -40,9 +41,12 @@ export class Task {
 	@ApiProperty()
 	status: TaskStatus
 
-	@ManyToOne(() => Project, (project) => project.tasks, { onDelete: 'CASCADE' })
+	@ManyToOne(() => Project, (project) => project.tasks, {
+		onDelete: 'CASCADE',
+		nullable: false,
+	})
 	project: Relation<Project>
 
 	@ManyToMany(() => Tag, (tag) => tag.tasks, { onDelete: 'CASCADE' })
-	tags: Relation<Task>[]
+	tags: Relation<Task[]>
 }

@@ -38,5 +38,5 @@ export class Project {
 	updatedAt: Date
 
 	@OneToMany(() => Task, (task) => task.project, { onDelete: 'CASCADE' })
-	tasks: Relation<Task>[]
+	tasks: Relation<Task[]>
 }

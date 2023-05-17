@@ -9,10 +9,10 @@ export enum TaskStatus {
 
 export class TaskCreateParams {
 	@MaxLength(512)
-	@ApiProperty()
+	@ApiProperty({ required: true })
 	description: string
 
-	@ApiProperty()
+	@ApiProperty({ required: true })
 	projectId: number
 }
 

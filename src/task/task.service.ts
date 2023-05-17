@@ -17,12 +17,16 @@ export class TaskService {
 
 	async create(data: TaskCreateParams) {
 		const createdAt = new Date()
-		return await this.repository.save({
-			...data,
-			status: TaskStatus.New,
-			createdAt,
-			updatedAt: createdAt,
-		})
+		return await this.repository.save(
+			{
+				...data,
+				project: { id: data.projectId },
+				status: TaskStatus.New,
+				createdAt,
+				updatedAt: createdAt,
+			},
+			{},
+		)
 	}
 
 	async delete(id: number) {

@@ -6,6 +6,7 @@ import { TaskModule } from './task/task.module'
 import { Task } from './task/task.entity'
 import { TagModule } from './tag/tag.module'
 import { Tag } from './tag/tag.entity'
+import { AppController } from './app.controller'
 
 @Module({
 	imports: [
@@ -23,5 +24,6 @@ import { Tag } from './tag/tag.entity'
 		TaskModule,
 		TagModule,
 	],
+	controllers: [AppController],
 })
 export class AppModule {}
