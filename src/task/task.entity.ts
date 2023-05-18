@@ -11,7 +11,7 @@ import {
 	Relation,
 } from 'typeorm'
 import { TaskStatus } from './task.types'
-import { Tag } from 'src/tag/tag.entity'
+import { Tag } from '../tag/tag.entity'
 
 @Entity()
 export class Task {

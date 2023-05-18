@@ -14,7 +14,21 @@ To fill DB with randomly generated data:
 1. start the service
 2. run `npm run seed`
 
-It will generate 10 projects, 200 tags, and for each project between 10-50 tasks
+It will generate 10 projects, 200 tags, and for each project between 10-50 tasks. To generate more, modify seeder script
+
+## Task search
+Searching is implemented on `POST /task/search` endpoint.
+Searching can be done by multiple filters:
+- id
+- description
+- createdAt
+- updatedAt
+- projectId, projectName
+- tagId, tagName
+
+For now, I implemented only `equals`, `lessThan`, `greaterThan` operations
+Sorting is by task id, but possibly could be extended to createdAt and updatedAt params
+The endpoint also supports pagination through `after` parameter. The value of `after` is task.id of last returned item from pevious page.
 
 ## What could be improved
 - create DB migrations, instead of `synchronize:true` in typeorm module
@@ -22,3 +36,4 @@ It will generate 10 projects, 200 tags, and for each project between 10-50 tasks
 - clean dependencies in `package.json` (most added on project init)
 - write more tests
 - better error messages and http responses
+- 

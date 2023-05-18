@@ -19,7 +19,7 @@ import {
 	TaskStatus,
 	TaskUpdateParams,
 } from './task.types'
-import { TagService } from 'src/tag/tag.service'
+import { TagService } from '../tag/tag.service'
 import pick from 'object.pick'
 
 @Injectable()

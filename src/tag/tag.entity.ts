@@ -6,7 +6,7 @@ import {
 	PrimaryGeneratedColumn,
 	Relation,
 } from 'typeorm'
-import { Task } from 'src/task/task.entity'
+import { Task } from '../task/task.entity'
 
 @Entity()
 export class Tag {

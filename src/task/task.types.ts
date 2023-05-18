@@ -1,9 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { MaxLength } from 'class-validator'
-import { Task } from './task.entity'
-import { type } from 'os'
-import { Project } from 'src/project/project.entity'
-import { Tag } from 'src/tag/tag.entity'
+import { Project } from '../project/project.entity'
+import { Tag } from '../tag/tag.entity'
 
 export enum TaskStatus {
 	New = 'new',

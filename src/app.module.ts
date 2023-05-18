@@ -19,7 +19,6 @@ import { AppController } from './app.controller'
 			password: process.env.POSTGRES_PASSWORD,
 			entities: [Project, Task, Tag],
 			synchronize: true,
-			logging: true,
 		}),
 		ProjectModule,
 		TaskModule,

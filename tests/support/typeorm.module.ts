@@ -1,6 +1,7 @@
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Project } from '../../src/project/project.entity'
 import { Task } from '../../src/task/task.entity'
+import { Tag } from '../../src/tag/tag.entity'
 
 export const TypeOrmTestingModule = TypeOrmModule.forRoot({
 	type: 'postgres',
@@ -9,6 +10,6 @@ export const TypeOrmTestingModule = TypeOrmModule.forRoot({
 	database: 'task_manager_test',
 	username: 'task_manager_test',
 	password: 'task_manager_test',
-	entities: [Project, Task],
+	entities: [Project, Task, Tag],
 	synchronize: true,
 })

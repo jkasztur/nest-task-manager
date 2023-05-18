@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
-import * as request from 'supertest'
+import request from 'supertest'
 import { ProjectModule } from '@src/project/project.module'
 import { TypeOrmTestingModule } from '@support/typeorm.module'
 import { flushDb } from '@support/helpers'
