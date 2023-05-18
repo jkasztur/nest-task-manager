@@ -20,10 +20,10 @@ export class TaskCreateParams {
 
 export class TaskUpdateParams {
 	@MaxLength(512)
-	@ApiProperty()
+	@ApiProperty({ maxLength: 512 })
 	description?: string
 
-	@ApiProperty()
+	@ApiProperty({ enum: Object.values(TaskStatus) })
 	status?: TaskStatus
 }
 export class FilterItem implements IFilterItem {
@@ -50,6 +50,12 @@ export interface IFilterItem {
 	op: string
 	value: string | number
 }
+
+export enum Order {
+	Asc = 'ASC',
+	Desc = 'DESC',
+}
+
 export class TaskSearchParams {
 	@ApiProperty({ type: [FilterItem] })
 	filters: FilterItem[]
@@ -57,18 +63,8 @@ export class TaskSearchParams {
 	limit: number
 	@ApiProperty({ nullable: true })
 	after?: number
-	@ApiProperty({ default: 'ASC' })
+	@ApiProperty({ enum: Object.values(Order), default: 'ASC' })
 	order: Order
-}
-
-export class TaskSearchResult {
-	@ApiProperty()
-	items: ExportedTask[]
-}
-
-export enum Order {
-	Asc = 'ASC',
-	Desc = 'DESC',
 }
 
 export class ExportedTask {
@@ -92,4 +88,9 @@ export class ExportedTask {
 
 	@ApiProperty()
 	tags: Array<Pick<Tag, 'id' | 'name'>>
+}
+
+export class TaskSearchResult {
+	@ApiProperty({ type: [ExportedTask] })
+	items: ExportedTask[]
 }

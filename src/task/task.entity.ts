@@ -40,7 +40,7 @@ export class Task {
 		type: 'enum',
 		enum: Object.values(TaskStatus),
 	})
-	@ApiProperty()
+	@ApiProperty({ enum: Object.values(TaskStatus) })
 	status: TaskStatus
 
 	@ManyToOne(() => Project, (project) => project.tasks, {
