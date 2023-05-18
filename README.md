@@ -2,7 +2,7 @@
 
 1. `nvm use`
 2. `npm i`
-3. `docker-compose up`
+3. `make up` or `docker-compose up`
 
 The commands start app container and postgres(but can be modified through ENV to connect to different host)
 
@@ -28,7 +28,7 @@ Searching can be done by multiple filters:
 
 For now, I implemented only `equals`, `lessThan`, `greaterThan` operations
 Sorting is by task id, but possibly could be extended to createdAt and updatedAt params
-The endpoint also supports pagination through `after` parameter. The value of `after` is task.id of last returned item from pevious page.
+The endpoint also supports pagination through `after` parameter. The value of `after` is task.id of last returned item from previous page.
 
 ## What could be improved
 - create DB migrations, instead of `synchronize:true` in typeorm module
@@ -36,4 +36,7 @@ The endpoint also supports pagination through `after` parameter. The value of `a
 - clean dependencies in `package.json` (most added on project init)
 - write more tests
 - better error messages and http responses
-- 
+ 
+## Tests
+Tests use separate database, flushing before each test.
+Cam be run with started service with `make test`
