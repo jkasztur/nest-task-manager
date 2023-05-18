@@ -12,11 +12,17 @@ import {
 	ValidationPipe,
 	HttpException,
 	Res,
+	Type,
 } from '@nestjs/common'
-import { TaskCreateParams, TaskUpdateParams } from './task.types'
+import {
+	ExportedTask,
+	TaskCreateParams,
+	TaskSearchParams,
+	TaskSearchResult,
+	TaskUpdateParams,
+} from './task.types'
 import { TaskService } from './task.service'
 import { ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { Task } from './task.entity'
 import { Response } from 'express'
 
 @Controller({ path: '/task' })
@@ -27,7 +33,7 @@ export class TaskController {
 
 	@Post()
 	@ApiBody({ type: TaskCreateParams })
-	@ApiResponse({ status: 200, type: Task })
+	@ApiResponse({ status: 200, type: ExportedTask })
 	@HttpCode(200)
 	async create(@Body() body: TaskCreateParams) {
 		return await this.service.create(body)
@@ -44,7 +50,7 @@ export class TaskController {
 
 	@Get('/:id')
 	@ApiParam({ name: 'id', type: 'number' })
-	@ApiResponse({ status: 200, type: Task })
+	@ApiResponse({ status: 200, type: ExportedTask })
 	@HttpCode(200)
 	async get(@Param('id', new ParseIntPipe()) id: number) {
 		const project = await this.service.get(id)
@@ -57,7 +63,7 @@ export class TaskController {
 	@Patch('/:id')
 	@ApiParam({ name: 'id', type: 'number' })
 	@ApiBody({ type: TaskUpdateParams })
-	@ApiResponse({ status: 200, type: Task })
+	@ApiResponse({ status: 200, type: ExportedTask })
 	@HttpCode(200)
 	async update(
 		@Param('id', new ParseIntPipe()) id: number,
@@ -73,7 +79,7 @@ export class TaskController {
 	@Patch('/:id/tag/:tagId')
 	@ApiParam({ name: 'id', type: 'number' })
 	@ApiParam({ name: 'tagId', type: 'number' })
-	@ApiResponse({ status: 200, type: Task })
+	@ApiResponse({ status: 200, type: ExportedTask })
 	@HttpCode(200)
 	@HttpCode(204)
 	async addTag(
@@ -96,5 +102,13 @@ export class TaskController {
 			default:
 				response.send(result.task)
 		}
+	}
+
+	@Post('/search')
+	@ApiBody({ type: TaskSearchParams })
+	@ApiResponse({ status: 200, type: TaskSearchResult })
+	@HttpCode(200)
+	async search(@Body() body: TaskSearchParams) {
+		return await this.service.search(body)
 	}
 }

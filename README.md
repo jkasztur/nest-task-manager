@@ -14,9 +14,11 @@ To fill DB with randomly generated data:
 1. start the service
 2. run `npm run seed`
 
-It will generate 10 projects, 50 tags, and for each project between 10-50 tasks
+It will generate 10 projects, 200 tags, and for each project between 10-50 tasks
 
 ## What could be improved
 - create DB migrations, instead of `synchronize:true` in typeorm module
 - add Dockerfile, make docker image
 - clean dependencies in `package.json` (most added on project init)
+- write more tests
+- better error messages and http responses
